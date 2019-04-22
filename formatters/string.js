@@ -40,6 +40,13 @@ function upperCase (d) {
   return d;
 }
 
+function parseN (d) {
+  if (typeof d === 'string' && !isNaN(d)) {
+    return parseInt(d);
+  }
+  return d;
+}
+
 /**
  * Upper case first letter
  * 
@@ -201,5 +208,6 @@ module.exports = {
   convCRLF  : convCRLF,
   unaccent  : unaccent,
   print     : print,
-  substr    : substr
+  substr    : substr,
+  parseN    : parseN,
 };

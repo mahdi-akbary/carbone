@@ -11,7 +11,7 @@
     - `convDate()` is deprecated
     - `add(valueToAdd)`, `mul(valueToMultiply)`, `sub(valueToSubstract)`,`div(value)` : mathematical operations
     - `substr(start, end)` : slice strings
-  - `carbone.set` and `carbone.render` have new options
+  - `api-report-generator.set` and `api-report-generator.render` have new options
     - `currencySource` : default currency of source data. Ex 'EUR' 
     - `currencyTarget` : default target currency when the formatter `convCurr` is used without target
     - `currencyRates`  : rates, based on EUR { EUR : 1, USD : 1.14 }
@@ -35,7 +35,7 @@
   - Fix a lot of strange bugs when using a filter without iterators in arrays (ex. `{d.cities[i=0].temperature}`)
   - Optimization: gain x10 when sorting 1 Million of rows
   - Add formatter `unaccent` to remove accent from string
-  - `carbone.set` does not overwrite user-defined translations
+  - `api-report-generator.set` does not overwrite user-defined translations
   - Accepts iteration on non-XML. Example: `{d[i].brand} , {d[i+1].brand}` 
   - Add new formatters
     - `unaccent()` to remove accent from string
@@ -57,13 +57,13 @@
 ### V1.0.0
   - Release June 7, 2017 - First Public Release, First Public Demo on the [Web2day](https://web2day.co) event!
   - It loads all lang at startup, and it is able to change the lang at runtime
-  - Avoid unnecessary synchronous code in `carbone.set`
+  - Avoid unnecessary synchronous code in `api-report-generator.set`
   - Improve documentation
   - Default template path is working directory by default
   - Return the list of supported format when an unknown `options.convertTo` is used
   - Accept more input type
   - Remove deprecated formatters
-  - `carbone.set` takes into account changes on `factories` and `startFactory` parameters
+  - `api-report-generator.set` takes into account changes on `factories` and `startFactory` parameters
   - Fix: a report without markers, except lang ones, is translated
   - Fix: avoid creating LibreOffice zombies when node crashes
   - Fix: avoid using LibreOffice if `options.convertTo` equals input file extension
@@ -86,12 +86,12 @@
     - `ifEqual(d, value, messageIfTrue, continueOnSuccess)`: show message if `d == value`, and stop propagation to next formatters unless `continueOnSuccess` is true
     - `ifContain(d, value, messageIfTrue, continueOnSuccess)`: show message if `d contains value`, and stop propagation to next formatters unless `continueOnSuccess` is true
     - `print(d, message)`: print message
-  - New function `carbone.renderXML(xmlString, data, options, callback)` to render XML directly
-  - Change the lang dynamically in `carbone.render` and `carbone.renderXML` with `options.lang = 'fr'`. The date formatter is automatically propagated on formatters such as `convDate`
+  - New function `api-report-generator.renderXML(xmlString, data, options, callback)` to render XML directly
+  - Change the lang dynamically in `api-report-generator.render` and `api-report-generator.renderXML` with `options.lang = 'fr'`. The date formatter is automatically propagated on formatters such as `convDate`
   - Replace module zipfile by yauzl: faster, lighter, asynchrone 
   - XLSX templates are accepted (beta)
   - Parse embedded XLSX and DOCX documents
-  - Add a tool to search a text within a marker in all reports `carbone find :formatterName` 
+  - Add a tool to search a text within a marker in all reports `api-report-generator find :formatterName` 
 
 
 ### v0.12.5
@@ -101,7 +101,7 @@
   - Fix: in formatters `convert`, `format`, `addDays`, `parse`: if the date is null or undefined these formatters return null or undefined instead of "Invalid Date"
 
 ### v0.12.4
-  - Fix: `carbone.render` crash if `options` contains `formatName` without `formatOptionsRaw` and `formatOptions` 
+  - Fix: `api-report-generator.render` crash if `options` contains `formatName` without `formatOptionsRaw` and `formatOptions` 
 
 ### v0.12.3
   - Fix: on OSX, the LibreOffice 5.2 path has changed
@@ -133,8 +133,8 @@
   - Fix a performance issue when a template isn't using iterators at all, this issue caused the array of data to become really big in some cases even though only a small portion of the data was really used
 
 ### v0.11.1
-  - CarboneJS Server can be used on a remote server. CarboneJS send the document by socket instead of writing a file locally (only when a document conversion occurs)
-  - CarboneJS Server 0.11 is still compatible with CarboneJS v0.10 clients
+  - api-report-generatorJS Server can be used on a remote server. api-report-generatorJS send the document by socket instead of writing a file locally (only when a document conversion occurs)
+  - api-report-generatorJS Server 0.11 is still compatible with api-report-generatorJS v0.10 clients
   - Add two benchmarks tests
   - Fix a random failure in a test
 
@@ -238,7 +238,7 @@
         }
       }
     };
-    carbone.render(_filePath, data, _options, function(err, result){
+    apiReportGenerator.render(_filePath, data, _options, function(err, result){
       ...
     });
   ```
@@ -252,7 +252,7 @@
         'formatOptionsRaw' : '124,34,0'
       }
     };
-    carbone.render(_filePath, data, _options, function(err, result){
+    apiReportGenerator.render(_filePath, data, _options, function(err, result){
       ...
     });
   ```

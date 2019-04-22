@@ -17,8 +17,8 @@ switch (_action) {
 
 function usage () {
   console.log('*************************************');
-  console.log('Carbone usage:');
-  console.log('   carbone translate [--help]');
-  console.log('   carbone find [--help]');
+  console.log('api-report-generator usage:');
+  console.log('   api-report-generator translate [--help]');
+  console.log('   api-report-generator find [--help]');
   process.exit();
 }

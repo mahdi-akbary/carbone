@@ -91,9 +91,9 @@ describe('Converter', function () {
       var _pdfResultPath = path.resolve('./test/datasets/test_odt_render_static.pdf');
       var _filePath = path.resolve('./test/datasets/test_odt_render_static.odt');
       converter.convertFile(_filePath, 'writer_pdf_Export', '', function (err, result) {
-        var _buf = new Buffer(result);
+        var _buf = new Buffer.allocUnsafe(result);
         assert.equal(_buf.slice(0, 4).toString(), '%PDF');
-        var bufPDF = new Buffer(_buf.length);
+        var bufPDF = new Buffer.allocUnsafe(_buf.length);
         fs.open(_pdfResultPath, 'r', function (status, fd) {
           fs.read(fd, bufPDF, 0, _buf.length, 0, function (err, bytesRead, buffer) {
             assert.equal(_buf.slice(0, 70).toString(), buffer.slice(0, 70).toString());
@@ -107,7 +107,7 @@ describe('Converter', function () {
       converter.init({factories : 1, startFactory : true, tempPath : tempPath}, function (factories) {
         converter.convertFile(_filePath, 'writer_pdf_Export', '', function (err, result) {
           helper.assert(err+'', 'null');
-          var _buf = new Buffer(result);
+          var _buf = new Buffer.allocUnsafe(result);
           assert.equal(_buf.slice(0, 4).toString(), '%PDF');
           // kill LibreOffice thread
           process.kill(factories['0'].pid);
@@ -116,7 +116,7 @@ describe('Converter', function () {
           setTimeout(function () {
             converter.convertFile(_filePath, 'writer_pdf_Export', '', function (err, result) {
               helper.assert(err+'', 'null');
-              var _buf = new Buffer(result);
+              var _buf = new Buffer.allocUnsafe(result);
               assert.equal(_buf.slice(0, 4).toString(), '%PDF');
               done(); 
             });
@@ -147,7 +147,7 @@ describe('Converter', function () {
           var _elapsed = (_end.getTime() - _start.getTime())/_nbExecuted; // time in milliseconds
           console.log('\n\n Conversion to PDF Time Elapsed : '+_elapsed + ' ms per pdf for '+_nbExecuted+' conversions (usally around 65ms) \n\n\n');
           for (var i = 0; i < _results.length; i++) {
-            var _buf = new Buffer(_results[i]);
+            var _buf = new Buffer.allocUnsafe(_results[i]);
             assert.equal(_buf.slice(0, 4).toString(), '%PDF');
           }
           assert.equal((_elapsed < 350), true);
@@ -192,7 +192,7 @@ describe('Converter', function () {
           var _elapsed = (_end.getTime() - _start.getTime())/_nbExecuted; // time in milliseconds
           console.log('\n\n Conversion to PDF Time Elapsed : '+_elapsed + ' ms per pdf for '+_nbExecuted+' conversions with '+(_nbExecuted/_crashModulo).toFixed(0)+' crashes\n\n\n');
           for (var i = 0; i < _results.length; i++) {
-            var _buf = new Buffer(_results[i]);
+            var _buf = new Buffer.allocUnsafe(_results[i]);
             assert.equal(_buf.slice(0, 4).toString(), '%PDF');
           }
           assert.equal((_elapsed < 400), true);
@@ -241,7 +241,7 @@ describe('Converter', function () {
                 var _filePath = path.resolve('./test/datasets/test_odt_render_static.odt');
                 converter.convertFile(_filePath, 'writer_pdf_Export', '', function (err, result) {
                   assert.equal(err, null);
-                  var _buf = new Buffer(result);
+                  var _buf = new Buffer.allocUnsafe(result);
                   assert.equal(_buf.slice(0, 4).toString(), '%PDF');
                   done(); 
                 });

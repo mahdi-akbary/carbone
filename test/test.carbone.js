@@ -125,7 +125,7 @@ describe('Carbone', function () {
       helper.rmDirRecursive(_templatePath);
       carbone.reset();
     });
-    it('should remove the template from the Carbone datastore (templatePath)', function (done) {
+    it('should remove the template from the API-REPORT-GENERATOR datastore (templatePath)', function (done) {
       var _fileId = '2.txt';
       var _filePath = path.join(_templatePath, _fileId);
       fs.writeFileSync(_filePath, 'bla');
@@ -340,7 +340,7 @@ describe('Carbone', function () {
         });
       });
     });
-    it('options.lang should dynamically force the lang of translation markers {t()} and use translations of carbone', function (done) {
+    it('options.lang should dynamically force the lang of translation markers {t()} and use translations of API-REPORT-GENERATOR', function (done) {
       var data = {
         param : '20160131'
       };
@@ -568,7 +568,7 @@ describe('Carbone', function () {
           });
         });
       });
-      it('convCurr() and formatC() should takes into account global parameters first, then options in carbone.render', function (done) {
+      it('convCurr() and formatC() should takes into account global parameters first, then options in API-REPORT-GENERATOR.render', function (done) {
         var data = {
           value : 10
         };
@@ -684,7 +684,7 @@ describe('Carbone', function () {
         var _elapsed = (_end.getTime() - _start.getTime())/_nbExecuted; // time in milliseconds
         console.log('\n\n Basic rendering: Time Elapsed : '+_elapsed + ' ms per file for '+_nbExecuted+' attempts (usally around 10ms)\n\n\n');
         for (var i = 0; i < _results.length; i++) {
-          var _buf = new Buffer(_results[i]);
+          var _buf = new Buffer.allocUnsafe(_results[i]);
           assert.equal((_buf.slice(0, 2).toString() === 'PK'), true);
         }
         assert.equal((_elapsed < 200), true);
@@ -912,9 +912,9 @@ describe('Carbone', function () {
       };
       carbone.render('test_word_render_A.docx', data, {convertTo : 'pdf'}, function (err, result) {
         assert.equal(err, null);
-        var buf = new Buffer(result);
+        var buf = new Buffer.allocUnsafe(result);
         assert.equal(buf.slice(0, 4).toString(), '%PDF');
-        var bufPDF = new Buffer(buf.length);
+        var bufPDF = new Buffer.allocUnsafe(buf.length);
         fs.open(_pdfResultPath, 'r', function (status, fd) {
           fs.read(fd, bufPDF, 0, buf.length, 0, function (err, bytesRead, buffer) {
             assert.equal(buf.slice(0, 50).toString(), buffer.slice(0, 50).toString());
@@ -931,7 +931,7 @@ describe('Carbone', function () {
       };
       carbone.render(path.resolve('./test/datasets/test_word_render_A.docx'), data, {convertTo : 'pdf'}, function (err, result) {
         assert.equal(err, null);
-        var buf = new Buffer(result);
+        var buf = new Buffer.allocUnsafe(result);
         assert.equal(buf.slice(0, 4).toString(), '%PDF');
         done();
       });
@@ -981,7 +981,7 @@ describe('Carbone', function () {
           var _elapsed = (_end.getTime() - _start.getTime())/_nbExecuted; // time in milliseconds
           console.log('\n\n Conversion to PDF Time Elapsed : '+_elapsed + ' ms per pdf for '+_nbExecuted+' conversions (usally around 65ms) \n\n\n');
           for (var i = 0; i < _results.length; i++) {
-            var _buf = new Buffer(_results[i]);
+            var _buf = new Buffer.allocUnsafe(_results[i]);
             assert.equal(_buf.slice(0, 4).toString(), '%PDF');
           }
           // assert.equal((_elapsed < 200), true);

@@ -1,5 +1,5 @@
 {
-  "name": "carbone",
+  "name": "api-report-generator",
   "description": "Fast, Simple and Powerful report generator. Injects JSON and produces PDF, DOCX, XLSX, ODT, PPTX, ODS, ...!",
   "version": "1.2.0",
   "bin": "bin/carbone",
